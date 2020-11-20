@@ -1,0 +1,19 @@
+{
+  "name": "sever.js",
+  "version": "1.0.0",
+  "description": "[![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://classroom.github.com/online_ide?assignment_repo_id=3168071&assignment_repo_type=AssignmentRepo)\r # intro-html\r HTML/CSS 簡介",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/multimediadesign/webpage-exwane426.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/multimediadesign/webpage-exwane426/issues"
+  },
+  "homepage": "https://github.com/multimediadesign/webpage-exwane426#readme"
+}
