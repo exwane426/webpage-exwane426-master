@@ -11,12 +11,15 @@ server = express();
 var bodyParser = require("body-parser");
 var formidable = require("formidable");
 var fs = require("fs");
+var sizeOf = require('image-size');
 
-server.use(express.static('Exercise1'));
+server.use(express.static('Exercise1'));//web root
 server.use(bodyParser.urlencoded({extended:false}));
 server.use(bodyParser.text({ type: 'text/html' }));
 server.use(bodyParser.json({ type: 'application/*+json' }));
 
+server.set("view engine","ejs");
+server.set("views", __dirname+"/views");
 
 
 server.get("/submitForm", function(req, res){
@@ -29,17 +32,34 @@ server.post("/add",function(req,res){
    form.parse(req, function(err, fields, files){
     if(err){
       console.log("File size too large!");
-      //res.redirct("")
+      res.render("error", {error: err.message, next:"javascript:history.back()"})
     }else{
       var gotFields = fields;
       var fileExt = files.poster.name.split(".")[1];
       gotFields.poster = gotFields.id + "."+fileExt;
       var posterPath = "Exercise1/uploads/"+gotFields.poster;
       fs.renameSync(files.poster.path, posterPath);
+      //check image size
+      sizeOf(posterPath, function(err, dim){
+        if(err){
+          res.render("error", {error:"Cannot read uploaded image file.", next:"javascript:history.back()"});
+        }else{
+          if(dim.width!=800 || dim.height!=400){
+            res.render("error", {error:"Image size requires 800x400.", next:"javascript:history.back()"});
+            fs.unlinkSync(posterPath);
+          }else{
+            //record to database, nedb, mongodb
+            res.render("game", {id: gotFields.id});
+          }
+        }
+      })
     }
    })
 });
 
+server.post("/addgamefile",function(req,res){
+
+});
 
 server.get("/", function(req, res){
   res.send("Hello World!");
